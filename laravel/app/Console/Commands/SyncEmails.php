@@ -24,7 +24,7 @@ class SyncEmails extends Command
         $users = User::whereNotNull('access_token')->get();
 
         foreach ($users as $user) {
-            $this->emailSyncService->sync($user);
+            $this->emailSyncService->syncEmails($user);
         }
 
         $this->info('Email synchronization complete.');

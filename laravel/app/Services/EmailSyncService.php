@@ -1,29 +1,28 @@
 <?php
+
 namespace App\Services;
 
 use GuzzleHttp\Client;
-use Elasticsearch\ClientBuilder;
+use Elastic\Elasticsearch\ClientBuilder;
 use App\Models\Email;
 use App\Models\User;
 
 class EmailSyncService
 {
-    private $accessToken;
     private $client;
     private $esClient;
 
-    public function __construct($accessToken)
+    public function __construct()
     {
-        $this->accessToken = $accessToken;
         $this->client = new Client(['base_uri' => 'https://graph.microsoft.com/v1.0/']);
         $this->esClient = ClientBuilder::create()->build();
     }
 
-    public function syncEmails(User $user)
+    public function syncEmails(User $user, $accessToken)
     {
         $response = $this->client->request('GET', 'me/messages', [
             'headers' => [
-                'Authorization' => 'Bearer ' . $this->accessToken
+                'Authorization' => 'Bearer ' . $accessToken
             ]
         ]);
 
