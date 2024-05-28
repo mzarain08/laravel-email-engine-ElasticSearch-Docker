@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Elasticsearch\Client;
 use App\Models\User;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Facades\Auth;
 
 class EmailController extends Controller
 {
@@ -54,7 +55,7 @@ class EmailController extends Controller
     public function syncData()
     {
         $user = Auth::user();
-        $emailSyncService = new EmailSyncService($user->outlook_token);
+        $emailSyncService = new EmailSyncService($user->outlook_token); // Pass $user->outlook_token as the accessToken
         $emailSyncService->syncEmails($user);
 
         return response()->json(['status' => 'Synchronization in progress']);
