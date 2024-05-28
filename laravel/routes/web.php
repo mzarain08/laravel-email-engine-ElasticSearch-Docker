@@ -16,13 +16,6 @@ Route::get('/auth/redirect', [OAuthController::class, 'redirectToProvider']);
 Route::get('/auth/outlook/callback', [OAuthController::class, 'handleProviderCallback']);
 
 Route::middleware('auth')->group(function () {
-    Route::get('/add-account', function () {
-        return view('add-account');
-    });
-
-    Route::get('/sync-data', function () {
-        return view('sync-data');
-    });
 
     Route::post('/api/create-account', [EmailController::class, 'createAccount']);
     Route::get('/api/sync-data', [EmailController::class, 'syncData']);
